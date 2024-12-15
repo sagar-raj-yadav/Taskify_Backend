@@ -2,19 +2,28 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const createCard=async(req,res)=>{
-    try{
-        const {cardname}=req.body;
+const createCard = async (req, res) => {
+  try {
+    const { cardname } = req.body; // Destructure the card name from the request body
 
-        const newCard =await prisma.Card.create({
-            data:cardname
-        })
-        return res.status(201).json(newCard);
+    // Ensure that cardname is provided
+    if (!cardname) {
+      return res.status(400).json({ error: 'Card name is required' });
     }
-    catch(error){
-        return res.status(500).json({ error: error.message });
-    }
-}
+
+    // Create a new card using Prisma
+    const newCard = await prisma.Card.create({
+      data: {
+        name: cardname, // Assign the cardname to the name field in the Card model
+      },
+    });
+
+    return res.status(201).json(newCard); // Return the newly created card as a response
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 
 const getAllCard=async(req,res)=>{
     try{

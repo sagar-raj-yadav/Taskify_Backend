@@ -13,18 +13,30 @@ const getAllTask=async(req,res)=>{
     }
 }
 
-const createTask=async(req,res)=>{
+const createTask = async (req, res) => {
     const { name, description, status, priority, dueDate, cardId } = req.body;
-
-    try{
-        const createtask=await prisma.Tsk.create({
-            data: { name, description, status, priority, dueDate, cardId }
-        })
-        return res.status(200).json(createtask);
-    } catch(error){
-        return res.status(500).json({ error: error.message });
+  
+    try {
+      // Check if the card exists in the database
+      const card = await prisma.Card.findUnique({
+        where: { id: cardId },
+      });
+  
+      if (!card) {
+        return res.status(400).json({ error: 'Card not found' });
+      }
+  
+      // Proceed to create the task
+      const createTask = await prisma.Task.create({
+        data: { name, description, status, priority, dueDate, cardId },
+      });
+  
+      return res.status(200).json(createTask);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
-}
+  };
+  
 
 
 const updateTask=async(req,res)=>{
