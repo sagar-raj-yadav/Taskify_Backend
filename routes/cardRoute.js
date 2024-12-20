@@ -6,6 +6,6 @@ const router=express.Router();
 router.get("/getallcard",getAllCard);
 router.post("/createcard",createCard);
 router.delete("/deletecard/:id",deleteCard);
-router.delete("/updatecard/:id",updateCard);
+router.put("/updatecard/:id",updateCard);
 
 export default router;

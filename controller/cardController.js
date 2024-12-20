@@ -54,11 +54,11 @@ const deleteCard=async(req,res)=>{
 const updateCard=async(req,res)=>{
     try{
         const {id}=req.params;
-        const {name}=req.body;
+        const {cardname}=req.body;
 
         const updatedcard=await prisma.Card.update({
             where: { id: parseInt(id) },
-            data: { name },
+            data: {name :cardname },
           })
           return res.status(200).json(updatedcard);
     }

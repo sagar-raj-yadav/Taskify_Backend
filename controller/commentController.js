@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Get all comments for a specific task within a specific card
-const getCommentsForTask = async (req, res) => {
+const getComment = async (req, res) => {
   try {
     const { cardId, taskId } = req.params;
 
@@ -49,4 +49,4 @@ const createComment = async (req, res) => {
   }
 };
 
-export { getCommentsForTask, createComment };
+export { getComment, createComment };
